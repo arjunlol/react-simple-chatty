@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 
 class Message extends Component {
   render() {
-    console.log("Rendering <Message/>");
-    // const color = "color:" + {this.props.color} + ";"
     if(this.props.type === "incomingMessage") {
       return (
 
@@ -12,7 +10,7 @@ class Message extends Component {
             <span className="message-content" dangerouslySetInnerHTML={{__html:this.props.contents}}></span>
           </div>
       );
-    } else {
+    } else { //else it is "incomingNotification"
       return (
         <div className="message system">
           {this.props.contents}

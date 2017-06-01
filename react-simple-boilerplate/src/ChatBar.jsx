@@ -36,11 +36,10 @@ class ChatBar extends Component {
     this.setState({username: e.target.value})
   }
 
-
   _onContentChange = (e) => {
     this.setState({contents: e.target.value});
   }
-
+  //do message callback if enter pressed on message
   _submitMsg = (e) => {
     if (e.key === 'Enter') {
       this.props.cbMsg(this.state.username, this.state.contents);
@@ -48,7 +47,7 @@ class ChatBar extends Component {
     }
 
   }
-
+  //do user change callback if enter pressed on user name
   _submitUser = (e) => {
     if (e.key === 'Enter') {
       this.props.cbUser(this.state.username);

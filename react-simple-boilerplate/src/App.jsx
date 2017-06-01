@@ -10,24 +10,10 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Bob"},
       messages: [], // message coming from the server stored here
-      onlineCount: 0,
-      color: ""
+      onlineCount: 0, //count of how many online users, overwritten on connection
+      color: "" //user color
     };
   }
-
-  //called when first rendered, waits 3 secs then adds a new msg to the list of mesages
-  // componentDidMount() {
-  //   console.log("componentDidMount <App />");
-  //   setTimeout(() => {
-  //     console.log("Simulating incoming message");
-  //     // Add a new message to the list of messages in the data store
-  //     const newMessage = {key: 3, username: "Michelle", content: "Hello there!"};
-  //     const messages = this.state.messages.concat(newMessage)
-  //     // Update the state of the app component.
-  //     // Calling setState will trigger a call to render() in App and all child components.
-  //     this.setState({messages: messages})
-  //   }, 3000);
-  // }
 
   componentDidMount() {
     //initiate connection to WS server
@@ -44,16 +30,13 @@ class App extends Component {
         switch(data['type']){
           case "incomingMessage":
             //handles incoming message
-
+            //incoming message and notification both have the same outcome
           case "incomingNotification":
             //handles incoming notification
             const messages = this.state.messages.concat(data)
             this.setState({messages:messages})
-            // this.setState({notification: data.contents})
-            console.log("notification just came boiii")
             break;
           case "count":
-            console.log('The counter is ', data.counter)
             this.setState({onlineCount: data.counter});
             break;
           case "color":
@@ -65,12 +48,10 @@ class App extends Component {
             throw new Error("Unknown event type" + data.type)
         }
       }
-      // send("TEST")
-    this.socket = ws;
+    this.socket = ws; //make globally accessible
   }
 
   render() {
-    console.log("Rendering <App/>");
     return (
       <div>
         <NavBar count={this.state.onlineCount}/>
@@ -80,19 +61,16 @@ class App extends Component {
     );
   }
 
+  //callback used when enter key pressed on chatbar message
   _userInput = (user, newMsg) => {
     this.socket.send(JSON.stringify({type: "postMessage" ,username: user, color:this.state.color, contents: newMsg}));
-    // const message = {key: this.state.messages.length +1, type: "incomingMessage", username: user, color:this.state.color, contents: newMsg}
-    // console.log(message.contents);
-    // const messages = this.state.messages.concat(message);
-    if (user !== this.state.currentUser.name)
+    if (user !== this.state.currentUser.name) //do user change callback if enter not pressed on user, but name still changed..
     this._userChange(user);
-    // this.setState({messages: messages});
   }
 
+  //callback used when enter pressed on chatbar user name
   _userChange = (newUser) => {
     const contents = `${this.state.currentUser.name} has changed their name to ${newUser}`
-    console.log(contents);
     const notif = {type: "postNotification", contents: contents}
     this.socket.send(JSON.stringify(notif));
     this.setState({currentUser: {name: newUser}})
