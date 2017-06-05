@@ -3,7 +3,7 @@ React Chatty App
 Chatty allows users to communicate with each other without having to register accounts. It uses React, a popular front-end library created and used heavily by Facebook as well as modern tools for Node including Webpack and Babel.
 
 ### Final Product
-!["Chat Screen"](https://github.com/arjunlol/react-simple-chatty/DOCS/Screenshot from 2017-06-05 00-07-27.png)
+!["Chat Screen"](https://github.com/arjunlol/react-simple-chatty/blob/master/DOCS/Screenshot%20from%202017-06-05%2000-07-27.png)
 * When any connected user sends a chat message, all connected users receive and display the message
 * When any connected user changes their name, all connected users are notified of the name change
 * Notifications are styled differently from chat messages
